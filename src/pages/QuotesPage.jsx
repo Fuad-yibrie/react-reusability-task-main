@@ -1,0 +1,50 @@
+import React, { useState, useEffect } from 'react';
+import Items from '../components/Items';
+
+function QuotesPage() {
+  const [quotes, setQuotes] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
+
+  useEffect(() => {
+    
+    setTimeout(() => {
+      try {
+       const fakeQuotes = [
+  { id: 101, text: '"The best way to predict the future is to invent it."', description: 'Alan Kay' },
+  { id: 102, text: '"Life is what happens when you\'re busy making other plans."', description: 'John Lennon' },
+  { id: 103, text: '"Get busy living or get busy dying."', description: 'Stephen King' },
+  { id: 104, text: '"You only live once, but if you do it right, once is enough."', description: 'Mae West' },
+  { id: 105, text: '"The only way to do great work is to love what you do."', description: 'Steve Jobs' },
+  { id: 106, text: '"Simplicity is the ultimate sophistication."', description: 'Leonardo da Vinci' }
+];
+        setQuotes(fakeQuotes);
+        setLoading(false);
+      } catch (err) {
+        setError('Failed to load quotes');
+        setLoading(false);
+      }
+    }, 1500);
+  }, []);
+
+  if (loading) {
+    return (
+      <Loading text="Loading inspirational quotes..." size="md" />
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="p-6 m-4 bg-red-50 border-l-4 border-red-500 text-red-700 rounded">
+        <p className="font-bold">Error</p>
+        <p>{error}</p>
+      </div>
+    );
+  }
+
+  return (
+    <Items title="Inspirational Quotes" items={quotes} />
+  );
+}
+
+export default QuotesPage;
